@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RTL Arena — how well do AI coding tools handle Arabic?</title>
+<meta name="description" content="A reproducible benchmark of how well Cursor, Claude, Copilot, v0 and Lovable handle Arabic / RTL — graded automatically by the Otto linters. Part of Otto.">
+<link rel="canonical" href="https://rtl-arena.ottospace.co/">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Dataset","name":"RTL Arena","description":"Benchmark of how well AI coding tools handle Arabic / right-to-left.","isPartOf":{"@type":"Organization","name":"Otto","url":"https://dev.ottospace.co"}}
+</script>
+<style>
+  :root{--bg:#0d1117;--panel:#161b22;--fg:#e6edf3;--mut:#8b949e;--gold:#e3b341;--blue:#58a6ff;--line:#21262d}
+  *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+  code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .wrap{max-width:820px;margin:0 auto;padding:0 22px}
+  header{padding:76px 0 36px;text-align:center}
+  .logo{font-weight:700;font-size:15px;letter-spacing:.14em;color:var(--mut);text-transform:uppercase}
+  h1{font-size:clamp(28px,5vw,42px);line-height:1.15;margin:16px 0 14px;font-weight:800}
+  .sub{font-size:19px;color:var(--mut);max-width:640px;margin:0 auto 24px}
+  .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-block;padding:11px 20px;border-radius:10px;text-decoration:none;font-weight:600}
+  .btn.p{background:var(--blue);color:#08131f}.btn.s{border:1px solid var(--line);color:var(--fg)}
+  section{padding:32px 0;border-top:1px solid var(--line)}h2{font-size:23px;margin:0 0 14px}
+  table{width:100%;border-collapse:collapse;font-size:15px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+  th{color:var(--mut);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+  .pending{color:var(--gold)}
+  ol{color:var(--mut)}ol b{color:var(--fg)}
+  pre{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;font-size:14px;margin:0}
+  footer{padding:40px 0 68px;color:var(--mut);text-align:center;border-top:1px solid var(--line);font-size:14px}
+  a{color:var(--blue)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">RTL Arena</div>
+    <h1>How well do AI coding tools actually handle Arabic?</h1>
+    <p class="sub">A small, reproducible benchmark of Cursor, Claude, Copilot, v0 and Lovable on right-to-left UI — graded automatically by the Otto linters. Everyone measures speed and correctness in English; nobody measures whether the AI-built web works for a fifth of the planet.</p>
+    <div class="btns">
+      <a class="btn p" href="https://github.com/moradothmanepro-OTTO/rtl-arena">Contribute results →</a>
+      <a class="btn s" href="https://dev.ottospace.co">Otto tools</a>
+    </div>
+  </header>
+  <section>
+    <h2>Leaderboard</h2>
+    <table>
+      <thead><tr><th>Rank</th><th>Tool</th><th>RTL score</th></tr></thead>
+      <tbody>
+        <tr><td>—</td><td>Cursor</td><td class="pending">collecting</td></tr>
+        <tr><td>—</td><td>Claude Code</td><td class="pending">collecting</td></tr>
+        <tr><td>—</td><td>GitHub Copilot</td><td class="pending">collecting</td></tr>
+        <tr><td>—</td><td>v0</td><td class="pending">collecting</td></tr>
+        <tr><td>—</td><td>Lovable</td><td class="pending">collecting</td></tr>
+      </tbody>
+    </table>
+    <p class="sub" style="text-align:left;margin-top:14px">Results are being collected in the open. Want your tool scored (or want to help)? Run the 15 prompts and open a PR.</p>
+  </section>
+  <section>
+    <h2>Method</h2>
+    <ol>
+      <li>Give each tool the same <b>15 Arabic/RTL prompts</b>.</li>
+      <li>Save its output; grade it: <code>node score.js outputs</code></li>
+      <li>The graders are <b>rtlint + arabitype + dls-check</b> — objective, reproducible.</li>
+    </ol>
+    <pre>npx github:moradothmanepro-OTTO/rtl-arena   # prompts + scorer</pre>
+  </section>
+  <footer>
+    An <strong><a href="https://dev.ottospace.co">Otto</a></strong> benchmark · graded by the Otto linters · MIT
+  </footer>
+</div>
+</body>
+</html>

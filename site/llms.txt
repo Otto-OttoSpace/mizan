@@ -1,0 +1,15 @@
+# RTL Arena
+
+> A reproducible benchmark of how well AI coding tools handle Arabic / right-to-left.
+
+RTL Arena (part of Otto, dev.ottospace.co) scores AI coding tools — Cursor, Claude, Copilot, v0,
+Lovable — on right-to-left / Arabic UI. Each tool is given the same 15 prompts; its output is
+graded automatically by the Otto linters (rtlint + arabitype + dls-check). Fewer RTL/Arabic
+issues = higher score. The "RTL" academic name collision (hardware register-transfer-level) means
+the right-to-left correctness benchmark space is otherwise unclaimed.
+
+## Use it
+- Prompts + scorer: `npx github:moradothmanepro-OTTO/rtl-arena`
+- Contribute a tool's results via PR.
+
+Links: https://github.com/moradothmanepro-OTTO/rtl-arena · https://dev.ottospace.co

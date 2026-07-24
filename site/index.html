@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RTL Arena — how well do AI coding tools handle Arabic?</title>
-<meta name="description" content="A reproducible benchmark of how well Cursor, Claude, Copilot, v0 and Lovable handle Arabic / RTL — graded automatically by the Otto linters. Part of Otto.">
-<link rel="canonical" href="https://rtl-arena.ottospace.co/">
+<title>Mizan — how well do AI coding tools handle Arabic?</title>
+<meta name="description" content="Mizan (ميزان, 'the scale') is a reproducible benchmark of how well Cursor, Claude, Copilot, v0 and Lovable handle Arabic / RTL — graded automatically by the Otto graders. Part of Otto.">
+<link rel="canonical" href="https://mizan.ottospace.co/">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Dataset","name":"RTL Arena","description":"Benchmark of how well AI coding tools handle Arabic / right-to-left.","isPartOf":{"@type":"Organization","name":"Otto","url":"https://dev.ottospace.co"}}
+{"@context":"https://schema.org","@type":"Dataset","name":"Mizan","alternateName":"RTL Arena","description":"Benchmark of how well AI coding tools handle Arabic / right-to-left.","isPartOf":{"@type":"Organization","name":"Otto","url":"https://dev.ottospace.co"}}
 </script>
 <style>
   :root{--bg:#0d1117;--panel:#161b22;--fg:#e6edf3;--mut:#8b949e;--gold:#e3b341;--blue:#58a6ff;--line:#21262d}
@@ -25,7 +25,7 @@
   table{width:100%;border-collapse:collapse;font-size:15px}
   th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
   th{color:var(--mut);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.06em}
-  .pending{color:var(--gold)}
+  .pending{color:var(--gold)}.mut{color:var(--mut);font-size:13px}
   ol{color:var(--mut)}ol b{color:var(--fg)}
   pre{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;font-size:14px;margin:0}
   footer{padding:40px 0 68px;color:var(--mut);text-align:center;border-top:1px solid var(--line);font-size:14px}
@@ -35,11 +35,11 @@
 <body>
 <div class="wrap">
   <header>
-    <div class="logo">RTL Arena</div>
+    <div class="logo">Mizan · ميزان</div>
     <h1>How well do AI coding tools actually handle Arabic?</h1>
-    <p class="sub">A small, reproducible benchmark of Cursor, Claude, Copilot, v0 and Lovable on right-to-left UI — graded automatically by the Otto linters. Everyone measures speed and correctness in English; nobody measures whether the AI-built web works for a fifth of the planet.</p>
+    <p class="sub"><b>Mizan</b> (Arabic <span dir="rtl" lang="ar">ميزان</span> — "the scale") weighs Cursor, Claude, Copilot, v0 and Lovable on right-to-left / Arabic UI. Everyone measures speed and correctness in English; nobody measures whether the AI-built web works for a fifth of the planet. The "RTL" academic name-collision (hardware register-transfer-level) leaves the <em>right-to-left</em> correctness space unclaimed — Mizan claims it.</p>
     <div class="btns">
-      <a class="btn p" href="https://github.com/moradothmanepro-OTTO/rtl-arena">Contribute results →</a>
+      <a class="btn p" href="https://github.com/Otto-OttoSpace/mizan">Contribute results →</a>
       <a class="btn s" href="https://dev.ottospace.co">Otto tools</a>
     </div>
   </header>
@@ -48,26 +48,27 @@
     <table>
       <thead><tr><th>Rank</th><th>Tool</th><th>RTL score</th></tr></thead>
       <tbody>
-        <tr><td>—</td><td>Cursor</td><td class="pending">collecting</td></tr>
-        <tr><td>—</td><td>Claude Code</td><td class="pending">collecting</td></tr>
-        <tr><td>—</td><td>GitHub Copilot</td><td class="pending">collecting</td></tr>
-        <tr><td>—</td><td>v0</td><td class="pending">collecting</td></tr>
-        <tr><td>—</td><td>Lovable</td><td class="pending">collecting</td></tr>
+        <!-- LEADERBOARD:START -->
+        <tr><td>1</td><td>Claude Code</td><td><strong>91</strong> <span class="mut">9 issues · 5/15 prompts</span></td></tr>
+        <tr><td>2</td><td>GitHub Copilot</td><td><strong>38</strong> <span class="mut">62 issues · 5/15 prompts</span></td></tr>
+        <tr><td>3</td><td>v0</td><td><strong>5</strong> <span class="mut">95 issues · 5/15 prompts</span></td></tr>
+        <!-- LEADERBOARD:END -->
       </tbody>
     </table>
-    <p class="sub" style="text-align:left;margin-top:14px">Results are being collected in the open. Want your tool scored (or want to help)? Run the 15 prompts and open a PR.</p>
+    <p class="sub" style="text-align:left;margin-top:14px">Scores are computed by <code>node score.js</code> from real tool outputs under <code>outputs/</code>. Higher is better. Want your tool scored (or want to help)? Run the 15 prompts and open a PR.</p>
   </section>
   <section>
     <h2>Method</h2>
     <ol>
-      <li>Give each tool the same <b>15 Arabic/RTL prompts</b>.</li>
-      <li>Save its output; grade it: <code>node score.js outputs</code></li>
-      <li>The graders are <b>rtlint + arabitype + dls-check</b> — objective, reproducible.</li>
+      <li>Give each tool the same <b>15 Arabic/RTL prompts</b> (<code>prompts.md</code>).</li>
+      <li>Save its output under <code>outputs/&lt;tool&gt;/</code>; grade it: <code>node score.js outputs</code></li>
+      <li>The graders are <b>miraat + kashida + daleel</b> (the Otto RTL toolchain) — objective, reproducible.</li>
+      <li>Scoring is <b>gated</b> (no Arabic → 0, so a tool can't win by shipping empty code), <b>per-prompt normalized</b>, and clamped. Full methodology in the README.</li>
     </ol>
-    <pre>npx github:moradothmanepro-OTTO/rtl-arena   # prompts + scorer</pre>
+    <pre>npx github:Otto-OttoSpace/mizan   # prompts + scorer</pre>
   </section>
   <footer>
-    An <strong><a href="https://dev.ottospace.co">Otto</a></strong> benchmark · graded by the Otto linters · MIT
+    An <strong><a href="https://dev.ottospace.co">Otto</a></strong> benchmark · graded by miraat + kashida + daleel · MIT
   </footer>
 </div>
 </body>

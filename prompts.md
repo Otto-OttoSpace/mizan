@@ -1,4 +1,4 @@
-# RTL Arena prompts
+# Mizan prompts
 
 Give each verbatim to the AI tool, then save its output to `outputs/<tool>/<n>.tsx` (or `.css`).
 Each prompt ends with: **"It must render correctly in Arabic (right-to-left)."**

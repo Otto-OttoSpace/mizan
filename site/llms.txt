@@ -1,15 +1,17 @@
-# RTL Arena
+# Mizan (formerly RTL Arena)
 
 > A reproducible benchmark of how well AI coding tools handle Arabic / right-to-left.
 
-RTL Arena (part of Otto, dev.ottospace.co) scores AI coding tools — Cursor, Claude, Copilot, v0,
-Lovable — on right-to-left / Arabic UI. Each tool is given the same 15 prompts; its output is
-graded automatically by the Otto linters (rtlint + arabitype + dls-check). Fewer RTL/Arabic
-issues = higher score. The "RTL" academic name collision (hardware register-transfer-level) means
-the right-to-left correctness benchmark space is otherwise unclaimed.
+Mizan (Arabic ميزان, "the scale"; part of Otto, dev.ottospace.co) scores AI coding tools — Cursor,
+Claude, Copilot, v0, Lovable — on right-to-left / Arabic UI. Each tool is given the same 15 prompts;
+its output is graded automatically by the Otto graders (miraat + kashida + daleel). Scoring is gated
+(no Arabic → 0), per-prompt normalized, and clamped, so a tool cannot win by emitting less or empty
+code. The "RTL" academic name collision (hardware register-transfer-level) means the right-to-left
+correctness benchmark space is otherwise unclaimed.
 
 ## Use it
-- Prompts + scorer: `npx github:moradothmanepro-OTTO/rtl-arena`
+- Prompts + scorer: `npx github:Otto-OttoSpace/mizan`
+- Grade outputs: `node score.js outputs`
 - Contribute a tool's results via PR.
 
-Links: https://github.com/moradothmanepro-OTTO/rtl-arena · https://dev.ottospace.co
+Links: https://github.com/Otto-OttoSpace/mizan · https://dev.ottospace.co

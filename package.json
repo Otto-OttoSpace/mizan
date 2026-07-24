@@ -1,0 +1,41 @@
+{
+  "name": "mizan",
+  "version": "0.2.0",
+  "description": "Mizan — a reproducible benchmark of how well AI coding tools handle Arabic / right-to-left UI, graded automatically by the Otto graders (miraat + kashida + daleel).",
+  "bin": {
+    "mizan": "score.js"
+  },
+  "main": "score.js",
+  "type": "commonjs",
+  "scripts": {
+    "score": "node score.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "mizan",
+    "rtl-arena",
+    "rtl",
+    "right-to-left",
+    "arabic",
+    "i18n",
+    "benchmark",
+    "ai-coding-tools",
+    "accessibility"
+  ],
+  "files": [
+    "score.js",
+    "prompts.md",
+    "outputs",
+    "README.md",
+    "LICENSE"
+  ],
+  "author": "Otto (Othmane Morad)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Otto-OttoSpace/mizan.git"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

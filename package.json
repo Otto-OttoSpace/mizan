@@ -37,5 +37,9 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "funding": {
+    "type": "polar",
+    "url": "https://polar.sh/otto-space"
   }
 }

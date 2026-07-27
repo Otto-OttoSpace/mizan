@@ -83,3 +83,9 @@ node --test        # scorer normalization + gating + scoring
 ```
 
 Part of **[Otto](https://dev.ottospace.co)** · MIT © 2026
+
+## 💛 Support & commercial use
+
+The Miraat suite is free and open-source (MIT). If it helps you ship correct Arabic/RTL, please consider [sponsoring](https://polar.sh/otto-space) — it funds maintenance and new rules.
+
+Using it in a commercial product, in CI, or need the private **DGA compliance** rule pack? **[Miraat Pro](https://polar.sh/otto-space)** adds a commercial license, a hosted CI audit that gates PRs ([miraat-action](https://github.com/Otto-OttoSpace/miraat-action)), and priority support.

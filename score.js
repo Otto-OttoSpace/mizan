@@ -1,14 +1,17 @@
 #!/usr/bin/env node
 'use strict';
 /*
- * Mizan — grade AI-tool outputs for Arabic / right-to-left correctness using the Otto graders.
+ * Mizan — an open, reproducible benchmark HARNESS for Arabic / right-to-left correctness in code,
+ * graded by the Otto RTL toolchain. It ships synthetic reference FIXTURES that self-test the graders.
+ * It does NOT publish scores for named commercial AI tools — to benchmark a real tool, run the
+ * prompts through it yourself and grade your own capture.
  *
  * Usage:
- *   node score.js [outputsDir]     print the leaderboard (default dir: ./outputs)
- *   node score.js --json           print machine-readable results
- *   node score.js --html           also write the computed leaderboard into site/index.html
+ *   node score.js [outputsDir]     grade every subfolder of ./outputs (default)
+ *   node score.js --json           machine-readable results
+ *   node score.js --html           write the computed table into site/index.html
  *
- * Each subfolder of the outputs dir is one AI tool's output (one file per prompt, see prompts.md).
+ * Each subfolder of the outputs dir is one case (a reference fixture, or a real tool capture you add).
  *
  * Methodology (documented fully in README.md → "Methodology"):
  *   1. Arabic-attempt gate  — a tool whose output is empty or contains no Arabic did NOT attempt
@@ -154,9 +157,9 @@ function computeLeaderboard(root) {
 
 function renderSiteTable(rows) {
   const label = { ok: '', 'partial-graders': ' (partial graders)', 'no-arabic': ' (no Arabic)', empty: ' (empty)', 'graders-unavailable': ' (graders offline)' };
-  const pretty = { 'claude-code': 'Claude Code', 'github-copilot': 'GitHub Copilot', v0: 'v0', cursor: 'Cursor', lovable: 'Lovable' };
   return rows.map((r, i) => {
-    const name = pretty[r.tool] || r.tool;
+    // The folder name IS the label — these are neutral fixtures, never a named vendor.
+    const name = r.tool;
     const score = r.score == null ? '<span class="pending">n/a</span>' : `<strong>${r.score}</strong>`;
     const note = r.status === 'ok'
       ? `${r.issues} issues · ${r.attempted}/${PROMPTS} prompts`
@@ -188,16 +191,17 @@ function main() {
   const rows = computeLeaderboard(root);
 
   if (!rows.length) {
-    console.log(`No tool-output folders in ${root}. Add outputs/<tool>/*.tsx (see prompts.md), then re-run.`);
+    console.log(`No output folders in ${root}. Add outputs/<name>/*.tsx (see prompts.md), then re-run.`);
     process.exit(0);
   }
 
   if (asHtml) console.log(writeSite(rows) ? 'Wrote leaderboard into site/index.html' : 'site/index.html has no LEADERBOARD markers — skipped.');
 
-  if (asJson) { console.log(JSON.stringify({ prompts: PROMPTS, graders: GRADERS.map(g => g.id), rows }, null, 2)); return; }
+  if (asJson) { console.log(JSON.stringify({ note: 'Synthetic reference fixtures that self-test the graders — NOT measurements of any named AI tool. To benchmark a real tool, run the prompts through it and grade your own capture.', prompts: PROMPTS, graders: GRADERS.map(g => g.id), rows }, null, 2)); return; }
 
-  console.log('Mizan — State of RTL in AI coding tools');
-  console.log(`(graded by ${GRADERS.map(g => g.id).join(' + ')}; higher score = better)\n`);
+  console.log('Mizan — RTL-correctness benchmark (grader self-test over fixtures)');
+  console.log(`(graded by ${GRADERS.map(g => g.id).join(' + ')}; higher score = fewer RTL issues)`);
+  console.log('Rows below are synthetic reference fixtures that exercise the graders — NOT measurements of any named AI tool.\n');
   for (const r of rows) {
     const s = r.score == null ? 'n/a' : String(r.score);
     const note = r.status === 'ok' || r.status === 'partial-graders'

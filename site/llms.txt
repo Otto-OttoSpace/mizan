@@ -1,13 +1,13 @@
 # Mizan (formerly RTL Arena)
 
-> A reproducible benchmark of how well AI coding tools handle Arabic / right-to-left.
+> An open, reproducible harness for grading right-to-left / Arabic correctness in code.
 
-Mizan (Arabic ميزان, "the scale"; part of Otto, dev.ottospace.co) scores AI coding tools — Cursor,
-Claude, Copilot, v0, Lovable — on right-to-left / Arabic UI. Each tool is given the same 15 prompts;
-its output is graded automatically by the Otto graders (miraat + kashida + daleel). Scoring is gated
-(no Arabic → 0), per-prompt normalized, and clamped, so a tool cannot win by emitting less or empty
-code. The "RTL" academic name collision (hardware register-transfer-level) means the right-to-left
-correctness benchmark space is otherwise unclaimed.
+Mizan (Arabic ميزان, "the scale"; part of Otto, dev.ottospace.co) is a benchmark harness that grades
+code for right-to-left / Arabic correctness using the Otto graders (miraat + kashida + daleel). It
+ships synthetic reference fixtures that self-test the graders; it does not publish scores for named
+commercial AI tools. To benchmark a real tool, run the same 15 prompts through it and grade your own
+capture. Scoring is gated (no Arabic → 0), per-prompt normalized, and clamped. The "RTL" academic name
+collision (hardware register-transfer-level) means the right-to-left correctness space is otherwise unclaimed.
 
 ## Use it
 - Prompts + scorer: `npx github:Otto-OttoSpace/mizan`

@@ -1,9 +1,10 @@
 # Mizan · ميزان
 
-**State of RTL in AI coding tools.** Mizan (Arabic *mīzān*, "the scale / balance") is a small,
-reproducible benchmark that weighs how well each AI coding tool (Cursor, Claude, Copilot, v0,
-Lovable…) handles Arabic / right-to-left — graded automatically by the
-[Otto](https://dev.ottospace.co) RTL toolchain.
+**An open benchmark for right-to-left correctness in code.** Mizan (Arabic *mīzān*, "the scale /
+balance") is a small, reproducible **harness** for grading how well code handles Arabic / right-to-left,
+using the [Otto](https://dev.ottospace.co) RTL toolchain. It ships synthetic reference **fixtures** that
+self-test the graders — it does **not** publish scores for named commercial AI tools. To benchmark a
+real tool, run the prompts through it yourself and grade your own capture.
 
 The naming gift: in academia "RTL" means hardware register-transfer-level, so the *right-to-left*
 correctness benchmark space is unclaimed. Mizan claims it. (Formerly **RTL Arena**.)
@@ -18,7 +19,7 @@ node score.js outputs                    # grade the outputs in ./outputs → le
 ## Method
 
 1. Give each AI tool the same set of UI prompts that must render in Arabic — see `prompts.md` (15).
-2. Save each tool's output under `outputs/<tool-name>/` (one file per prompt).
+2. Save each capture under `outputs/<name>/` (one file per prompt) — a reference fixture, or a tool you ran yourself.
 3. Grade every output: `node score.js outputs`. It runs the three Otto graders and computes a score.
 4. Publish the leaderboard: `node score.js --html` writes the computed table into `site/index.html`.
 
@@ -59,22 +60,26 @@ sample  = min(1, arabicFiles / MIN_ATTEMPTS)     # MIN_ATTEMPTS = 5
 score   = round( clamp(100 - density * PENALTY, 0, 100) * sample )   # PENALTY = 5
 ```
 
-## Current leaderboard (seeded example outputs)
+## Reference fixtures (grader self-test)
 
-Computed by `node score.js` over the sample outputs in `outputs/` (real graders, not placeholders):
+`outputs/` ships three **synthetic reference fixtures** — not measurements of any named tool:
 
-| Rank | Tool           | Score | Issues |
-|------|----------------|-------|--------|
-| 1    | Claude Code    | ~91   | few    |
-| 2    | GitHub Copilot | ~38   | some   |
-| 3    | v0             | ~5    | many   |
+| Fixture           | What it is                                        |
+|-------------------|---------------------------------------------------|
+| `fixture-clean`   | logical properties, correct shaping — scores high |
+| `fixture-mixed`   | some physical CSS / issues — scores mid           |
+| `fixture-broken`  | stacks the anti-patterns — scores low             |
 
-(Exact numbers depend on the pinned grader versions; run `node score.js` to reproduce.)
+Run `node score.js` to see the grader separate them. **These exist to demonstrate and self-test the
+scorer, not to rank commercial products.** To benchmark a real AI tool, run the 15 prompts through it,
+save its output under `outputs/<name>/`, and grade it — recording the tool version and date so results
+are reproducible.
 
 ## Contribute
 
-Run the 15 prompts through a tool you have access to, drop the outputs in `outputs/<tool>/`, open a
-PR. The Otto graders are objective and reproducible, so results are comparable across contributors.
+Run the 15 prompts through a tool you have access to, save the outputs under `outputs/<name>/` with the
+tool version + date noted, and open a PR. The Otto graders are objective and reproducible, so results
+are comparable across contributors who capture real outputs the same way.
 
 ## Test
 

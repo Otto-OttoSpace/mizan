@@ -1,7 +1,7 @@
 {
-  "name": "mizan",
+  "name": "@ottospace/mizan",
   "version": "0.2.0",
-  "description": "Mizan — a reproducible benchmark of how well AI coding tools handle Arabic / right-to-left UI, graded automatically by the Otto graders (miraat + kashida + daleel).",
+  "description": "Mizan — an open, reproducible benchmark harness for right-to-left / Arabic correctness in code, graded by the Otto RTL toolchain (miraat + kashida + daleel). Ships reference fixtures; not a scoreboard of named tools.",
   "bin": {
     "mizan": "score.js"
   },
@@ -41,5 +41,8 @@
   "funding": {
     "type": "polar",
     "url": "https://polar.sh/otto-space"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

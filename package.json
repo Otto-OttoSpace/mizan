@@ -1,7 +1,7 @@
 {
   "name": "@ottospace/mizan",
   "version": "0.3.0",
-  "description": "Mizan — an open, reproducible benchmark harness for right-to-left / bidi / Arabic-UI correctness in code (bidirectional text, not hardware register-transfer-level), graded by the Otto right-to-left toolchain (miraat + kashida + daleel + lahja). Ships reference fixtures; not a scoreboard of named tools.",
+  "description": "Mizan — an open, reproducible benchmark harness for right-to-left / bidi / Arabic-UI correctness in code (bidirectional text, not hardware register-transfer-level), graded by the OttoSpaceSpace right-to-left toolchain (miraat + kashida + daleel + lahja). Ships reference fixtures; not a scoreboard of named tools.",
   "bin": {
     "mizan": "score.js"
   },

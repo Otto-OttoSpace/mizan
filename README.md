@@ -1,13 +1,15 @@
 # Mizan · ميزان
 
-**An open benchmark for right-to-left correctness in code.** Mizan (Arabic *mīzān*, "the scale /
-balance") is a small, reproducible **harness** for grading how well code handles Arabic / right-to-left,
-using the [Otto](https://dev.ottospace.co) RTL toolchain. It ships synthetic reference **fixtures** that
-self-test the graders — it does **not** publish scores for named commercial AI tools. To benchmark a
-real tool, run the prompts through it yourself and grade your own capture.
+**An open benchmark for right-to-left / bidi / Arabic-UI correctness in code.** Mizan (Arabic *mīzān*,
+"the scale / balance") is a small, reproducible **harness** for grading how well code handles
+right-to-left, bidirectional text, and Arabic UI, using the [Otto](https://dev.ottospace.co)
+right-to-left toolchain. It ships synthetic reference **fixtures** that self-test the graders — it
+does **not** publish scores for named commercial AI tools. To benchmark a real tool, run the prompts
+through it yourself and grade your own capture.
 
-The naming gift: in academia "RTL" means hardware register-transfer-level, so the *right-to-left*
-correctness benchmark space is unclaimed. Mizan claims it. (Formerly **RTL Arena**.)
+The naming note: the bare acronym "RTL" means hardware register-transfer-level in engineering, which
+collides in search — so Mizan describes itself in full as **right-to-left / bidi / Arabic-UI**, and
+that correctness-benchmark space is unclaimed. Mizan claims it. (Formerly **RTL Arena**.)
 
 ## Quick start
 
@@ -20,19 +22,23 @@ node score.js outputs                    # grade the outputs in ./outputs → le
 
 1. Give each AI tool the same set of UI prompts that must render in Arabic — see `prompts.md` (15).
 2. Save each capture under `outputs/<name>/` (one file per prompt) — a reference fixture, or a tool you ran yourself.
-3. Grade every output: `node score.js outputs`. It runs the three Otto graders and computes a score.
+3. Grade every output: `node score.js outputs`. It runs the four Otto graders and computes a score.
 4. Publish the leaderboard: `node score.js --html` writes the computed table into `site/index.html`.
 
 The graders (renamed from the original Otto linters, configurable at the top of `score.js`):
 
-| Grader    | Measures                | Was         |
-|-----------|-------------------------|-------------|
-| `miraat`  | RTL layout bugs         | rtlint      |
-| `kashida` | Arabic typography       | arabitype   |
-| `daleel`  | DGA / a11y readiness    | dls-check   |
+| Grader    | Measures                   | Was         |
+|-----------|----------------------------|-------------|
+| `miraat`  | right-to-left layout bugs  | rtlint      |
+| `kashida` | Arabic typography          | arabitype   |
+| `daleel`  | DGA / a11y readiness       | dls-check   |
+| `lahja`   | i18n / locale correctness  | i18nlint    |
+
+A grader that isn't installed degrades to **n/a** for that grader (it is reported as *offline*, never
+silently counted as zero issues); the tool only scores `n/a` overall when **every** grader is offline.
 
 Override the org/pin/binaries with env vars: `MIZAN_ORG`, `MIZAN_REF`,
-`MIZAN_MIRAAT_BIN=/abs/path` (and `…_KASHIDA_BIN`, `…_DALEEL_BIN`) for local checkouts or CI.
+`MIZAN_MIRAAT_BIN=/abs/path` (and `…_KASHIDA_BIN`, `…_DALEEL_BIN`, `…_LAHJA_BIN`) for local checkouts or CI.
 
 ## Methodology (why the score is honest)
 
@@ -41,9 +47,9 @@ Arabic at all — trivially scores 100. Mizan closes those holes:
 
 1. **Arabic-attempt gate.** A tool whose output is empty or contains **no Arabic** did not attempt
    the benchmark. It scores **0**, never a bogus "no issues → 100".
-2. **Schema normalization.** `miraat` reports `findings` as an *array*; `kashida`/`daleel` report it
-   as a *number*. The scorer normalizes each grader to a real issue count before summing (this was
-   a live bug — array + number was string-coercing to garbage).
+2. **Schema normalization.** `miraat` reports `findings` as an *array*; `kashida`/`daleel`/`lahja`
+   report it as a *number*. The scorer normalizes each grader to a real issue count before summing
+   (this was a live bug — array + number was string-coercing to garbage).
 3. **Grader-failure aware.** If a grader can't run (no parseable JSON) it is reported as
    *unavailable* — it is **not** silently counted as zero issues. If **all** graders fail, the tool
    scores `n/a`, not 100. (This is the bug that made every tool score 100 against a dead repo.)

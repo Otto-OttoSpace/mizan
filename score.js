@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 'use strict';
 /*
- * Mizan — an open, reproducible benchmark HARNESS for Arabic / right-to-left correctness in code,
- * graded by the Otto RTL toolchain. It ships synthetic reference FIXTURES that self-test the graders.
+ * Mizan — an open, reproducible benchmark HARNESS for right-to-left / bidi / Arabic-UI correctness
+ * in code (bidi, not hardware register-transfer-level), graded by the Otto right-to-left toolchain.
+ * It ships synthetic reference FIXTURES that self-test the graders.
  * It does NOT publish scores for named commercial AI tools — to benchmark a real tool, run the
  * prompts through it yourself and grade your own capture.
  *
@@ -32,9 +33,10 @@ const path = require('path');
 const ORG = process.env.MIZAN_ORG || 'Otto-OttoSpace';
 const REF = process.env.MIZAN_REF || 'v0.2.0'; // pin grader repos to a tag for reproducibility
 const GRADERS = [
-  { id: 'miraat',  repo: 'miraat',  was: 'rtlint',    measures: 'RTL layout bugs' },
+  { id: 'miraat',  repo: 'miraat',  was: 'rtlint',    measures: 'right-to-left layout bugs' },
   { id: 'kashida', repo: 'kashida', was: 'arabitype', measures: 'Arabic typography' },
   { id: 'daleel',  repo: 'daleel',  was: 'dls-check', measures: 'DGA / a11y readiness' },
+  { id: 'lahja',   repo: 'lahja',   was: 'i18nlint',  measures: 'i18n / locale correctness' },
 ];
 
 // --- Scoring knobs ---------------------------------------------------------------------------
@@ -67,9 +69,9 @@ function resolveGrader(g) {
   return { cmd: 'npx', pre: ['-y', pkg] };
 }
 
-// Normalize the two grader schemas into a plain issue count (bug #3):
-//   miraat/rtlint      → findings is an ARRAY of objects   → use its length
-//   kashida / daleel   → findings is a NUMBER              → use it directly
+// Normalize the grader schemas into a plain issue count (bug #3):
+//   miraat/rtlint             → findings is an ARRAY of objects → use its length
+//   kashida / daleel / lahja  → findings is a NUMBER            → use it directly
 function countFindings(j) {
   if (!j || typeof j !== 'object') return 0;
   const f = j.findings;
@@ -199,8 +201,8 @@ function main() {
 
   if (asJson) { console.log(JSON.stringify({ note: 'Synthetic reference fixtures that self-test the graders — NOT measurements of any named AI tool. To benchmark a real tool, run the prompts through it and grade your own capture.', prompts: PROMPTS, graders: GRADERS.map(g => g.id), rows }, null, 2)); return; }
 
-  console.log('Mizan — RTL-correctness benchmark (grader self-test over fixtures)');
-  console.log(`(graded by ${GRADERS.map(g => g.id).join(' + ')}; higher score = fewer RTL issues)`);
+  console.log('Mizan — right-to-left / bidi / Arabic-UI correctness benchmark (grader self-test over fixtures)');
+  console.log(`(graded by ${GRADERS.map(g => g.id).join(' + ')}; higher score = fewer right-to-left / bidi / Arabic-UI issues)`);
   console.log('Rows below are synthetic reference fixtures that exercise the graders — NOT measurements of any named AI tool.\n');
   for (const r of rows) {
     const s = r.score == null ? 'n/a' : String(r.score);

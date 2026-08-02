@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mizan — an open RTL-correctness benchmark for AI-generated code</title>
-<meta name="description" content="Mizan (ميزان, 'the scale') is an open, reproducible benchmark harness for Arabic / right-to-left correctness in code — graded by the Otto RTL toolchain. Ships reference fixtures; benchmark any tool by running the prompts yourself. Part of Otto.">
+<meta name="description" content="Mizan (ميزان, 'the scale') is an open, reproducible benchmark harness for Arabic / right-to-left correctness in code — graded by the Miraat Labs RTL toolchain. Ships reference fixtures; benchmark any tool by running the prompts yourself. Part of Miraat Labs, by OttoSpace.">
 <link rel="canonical" href="https://mizan.ottospace.co/">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Mizan","alternateName":"RTL Arena","applicationCategory":"DeveloperApplication","description":"An open, reproducible benchmark harness for Arabic / right-to-left correctness in AI-generated code, graded by the Otto RTL toolchain.","isPartOf":{"@type":"Organization","name":"Otto","url":"https://dev.ottospace.co"}}
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Mizan","alternateName":"RTL Arena","applicationCategory":"DeveloperApplication","description":"An open, reproducible benchmark harness for Arabic / right-to-left correctness in AI-generated code, graded by the Miraat Labs RTL toolchain.","isPartOf":{"@type":"Organization","name":"Miraat Labs","url":"https://dev.ottospace.co"}}
 </script>
 <style>
   :root{--bg:#0d1117;--panel:#161b22;--fg:#e6edf3;--mut:#8b949e;--gold:#e3b341;--blue:#58a6ff;--line:#21262d}
@@ -63,13 +63,13 @@
     <ol>
       <li>Give each tool the same <b>15 Arabic/RTL prompts</b> (<code>prompts.md</code>).</li>
       <li>Save the output under <code>outputs/&lt;name&gt;/</code>; grade it: <code>node score.js outputs</code></li>
-      <li>The graders are <b>miraat + kashida + daleel</b> (the Otto RTL toolchain) — objective, reproducible.</li>
+      <li>The graders are <b>miraat + kashida + daleel</b> (the Miraat Labs RTL toolchain) — objective, reproducible.</li>
       <li>Scoring is <b>gated</b> (no Arabic → 0, so a tool can't win by shipping empty code), <b>per-prompt normalized</b>, and clamped. Full methodology in the README.</li>
     </ol>
     <pre>npx github:Otto-OttoSpace/mizan   # prompts + scorer</pre>
   </section>
   <footer>
-    An <strong><a href="https://dev.ottospace.co">Otto</a></strong> benchmark · graded by miraat + kashida + daleel · MIT
+    A <strong><a href="https://dev.ottospace.co">Miraat Labs</a></strong> benchmark · graded by miraat + kashida + daleel · MIT
   </footer>
 </div>
 </body>
